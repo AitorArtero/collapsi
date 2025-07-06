@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../widgets/zen_button.dart';
 import '../widgets/zen_page_scaffold.dart';
@@ -11,7 +12,7 @@ import 'quick_game_setup_screen.dart';
 import 'local_game_setup_screen.dart';
 import 'tournament_screen.dart';
 import 'settings_screen.dart';
-import 'dart:math' as math;
+
 
 /// Pantalla principal del menú con diseño zen minimalista y feedback mejorado
 class MenuScreen extends StatefulWidget {
@@ -92,13 +93,27 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             opacity: _fadeAnimation,
             child: SlideTransition(
               position: _slideAnimation,
-              child: Column(
-                children: [
-                  _buildHeader(),
-                  Expanded(
-                    child: _buildMenuOptions(),
-                  ),
-                ],
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            _buildHeader(),
+                            Expanded(
+                              child: _buildMenuOptions(constraints),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           );
@@ -137,12 +152,25 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildMenuOptions() {
+  Widget _buildMenuOptions(BoxConstraints constraints) {
+    // Calcular la altura aproximada que necesitan todos los elementos
+    const double headerHeight = 120; // Aproximado del header
+    const double menuItemsHeight = 400; // Aproximado de todos los elementos del menú
+    const double totalEstimatedHeight = headerHeight + menuItemsHeight;
+    
+    // Si hay suficiente espacio, centrar verticalmente; si no, alinear al principio
+    final bool hasEnoughSpace = constraints.maxHeight >= totalEstimatedHeight;
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: UIConstants.spacing24),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: hasEnoughSpace 
+            ? MainAxisAlignment.center 
+            : MainAxisAlignment.start,
         children: [
+          // Si no hay suficiente espacio, agregar un poco de padding superior
+          if (!hasEnoughSpace) const SizedBox(height: UIConstants.spacing16),
+          
           // Partida rápida
           _buildMenuCard(
             icon: Icons.flash_on_rounded,
@@ -178,6 +206,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             fullWidth: true,
             icon: Icons.settings_rounded,
           ),
+          
+          // Padding inferior para asegurar que hay espacio al final cuando se hace scroll
+          const SizedBox(height: UIConstants.spacing32),
         ],
       ),
     );

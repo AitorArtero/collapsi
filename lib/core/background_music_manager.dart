@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../config/app_settings.dart';
@@ -29,7 +28,7 @@ class BackgroundMusicManager with WidgetsBindingObserver {
   late AudioPlayer _musicPlayer;
   
   // Estado actual
-  BackgroundMusicTrack _currentTrack = BackgroundMusicTrack.lofi_piano;
+  BackgroundMusicTrack _currentTrack = BackgroundMusicTrack.rhythm_zen;
   bool _musicEnabled = true;
   bool _isInitialized = false;
   bool _isPlaying = false;

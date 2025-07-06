@@ -21,10 +21,10 @@ class GameCell extends StatefulWidget {
   });
 
   @override
-  State<GameCell> createState() => GameCellState(); // 🆕 CAMBIO: Hacer público
+  State<GameCell> createState() => GameCellState();
 }
 
-class GameCellState extends State<GameCell> // 🆕 CAMBIO: Clase pública
+class GameCellState extends State<GameCell>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -133,31 +133,53 @@ class GameCellState extends State<GameCell> // 🆕 CAMBIO: Clase pública
   void _onTurnChanged() {
     if (!_movementHelpEnabled) return;
 
-  // Cancelar timer anterior si existe
-  _delayTimer?.cancel();
-  
-  // Ocultar movimientos válidos inmediatamente
-  setState(() {
-    _showingValidMoves = false;
-  });
-  _animationController.reset();
+    // Cancelar timer anterior si existe
+    _delayTimer?.cancel();
+    
+    // Ocultar movimientos válidos inmediatamente
+    setState(() {
+      _showingValidMoves = false;
+    });
+    _animationController.reset();
 
-  // No mostrar ayuda si está temporalmente desactivada
-  if (_helpTemporarilyDisabled) {
-    print('🎬 GameCell (${widget.gridX},${widget.gridY}): Ayuda bloqueada - temporalmente desactivada');
-    return;
-  }
+    // No mostrar ayuda si está temporalmente desactivada
+    if (_helpTemporarilyDisabled) {
+      print('🎬 GameCell (${widget.gridX},${widget.gridY}): Ayuda bloqueada - temporalmente desactivada');
+      return;
+    }
 
-  // Solo mostrar ayuda si es turno del jugador humano (0) y el juego no ha terminado
-  if (widget.game.currentPlayer == 0 && !widget.game.gameOver) {
-    // Iniciar timer para el delay
-    _delayTimer = Timer(Duration(milliseconds: (_movementHelpDelay * 1000).round()), () {
-      if (mounted && _movementHelpEnabled && widget.game.currentPlayer == 0 && !_helpTemporarilyDisabled) {
-          setState(() {
-            _showingValidMoves = true;
-          });
-          // Iniciar animación de fade-in gradual
-          _animationController.forward();
+  // Determinar si mostrar ayuda según el modo de juego
+    bool shouldShowHelp = false;
+    
+    if (widget.game.aiMode) {
+      // Modo vs IA: solo mostrar ayuda para el jugador humano (0)
+      shouldShowHelp = widget.game.currentPlayer == 0;
+    } else {
+      // Modo 1vs1: mostrar ayuda para ambos jugadores (0 y 1)
+      shouldShowHelp = true;
+    }
+
+    // Solo mostrar ayuda si el juego no ha terminado y se cumple la condición del modo
+    if (shouldShowHelp && !widget.game.gameOver) {
+      // Iniciar timer para el delay
+      _delayTimer = Timer(Duration(milliseconds: (_movementHelpDelay * 1000).round()), () {
+        if (mounted && _movementHelpEnabled && !_helpTemporarilyDisabled) {
+          // Verificar nuevamente las condiciones al activar la ayuda
+          bool stillShouldShow = false;
+          
+          if (widget.game.aiMode) {
+            stillShouldShow = widget.game.currentPlayer == 0;
+          } else {
+            stillShouldShow = true;
+          }
+          
+          if (stillShouldShow && !widget.game.gameOver) {
+            setState(() {
+              _showingValidMoves = true;
+            });
+            // Iniciar animación de fade-in gradual
+            _animationController.forward();
+          }
         }
       });
     }
