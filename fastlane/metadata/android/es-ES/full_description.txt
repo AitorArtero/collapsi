@@ -1,0 +1,21 @@
+Collapsi es un juego de estrategia por turnos donde dos jugadores compiten por ser el último en poder moverse en un tablero que colapsa progresivamente.
+
+CARACTERÍSTICAS:
+- Cada celda del tablero contiene un número que indica exactamente cuántas casillas debes moverte
+- Después de cada movimiento, la casilla donde estabas se bloquea permanentemente
+- El objetivo es dejar a tu oponente sin movimientos válidos disponibles
+- Los movimientos pueden atravesar los bordes del tablero (wrap-around/túneles)
+
+MODOS DE JUEGO:
+- Humano vs Humano: Partidas locales entre dos jugadores
+- Humano vs IA: 4 niveles de dificultad (Fácil, Medio, Difícil, Experto)
+- Modo torneo: Sistema de progresión con múltiples niveles
+
+CONFIGURACIONES:
+- Múltiples tamaños de tablero: 4×4, 5×5, 6×6
+- Ayuda visual de movimientos con delay configurable
+- Sistema de sonido
+- Retroalimentación háptica en dispositivos móviles
+- Interfaz responsiva optimizada para móviles
+
+Desarrollado completamente en Flutter, sin publicidad ni compras dentro de la aplicación.

@@ -1,0 +1,53 @@
+Categories:
+  - Games
+License: MIT
+AuthorName: Aitor Artero
+AuthorEmail: aitor.artero@gmail.com
+SourceCode: https://github.com/AitorArtero/collapsi
+IssueTracker: https://github.com/AitorArtero/collapsi/issues
+
+AutoName: Collapsi
+Description: |-
+    Collapsi is a turn-based strategy game where two players compete to be the last one able to move on a progressively collapsing board.
+
+    Each board cell contains a number indicating exactly how many squares you must move. After each move, your previous position becomes permanently blocked. The goal is to leave your opponent without valid moves available. Movements can cross board edges (wrap-around/tunnels).
+
+    '''Game Modes:'''
+    * Human vs Human: Local matches between two players
+    * Human vs AI: 4 difficulty levels (Easy, Medium, Hard, Expert)  
+    * Tournament mode: Progression system with multiple levels
+
+    '''Settings:'''
+    * Multiple board sizes: 4×4, 5×5, 6×6
+    * Visual movement help with configurable delay
+    * Sound system with sound effects and background music
+    * Haptic feedback on mobile devices
+    * Responsive interface optimized for mobile
+
+    The AI system implements three classic game theory algorithms: Greedy (Easy), Heuristic (Medium/Hard), and Minimax with alpha-beta pruning (Expert).
+
+    Fully developed in Flutter, without ads or in-app purchases. The app interface is currently in Spanish only.
+
+RepoType: git
+Repo: https://github.com/AitorArtero/collapsi.git
+
+Builds:
+  - versionName: '1.0.0'
+    versionCode: 1
+    commit: v1.0.0
+    subdir: android/app
+    output: build/app/outputs/flutter-apk/app-release.apk
+    srclibs:
+      - flutter@stable
+    prebuild:
+      - cd ../..
+      - flutter clean
+      - flutter packages get
+    build:
+      - cd ../..
+      - flutter build apk --release
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: '1.0.0'
+CurrentVersionCode: 1

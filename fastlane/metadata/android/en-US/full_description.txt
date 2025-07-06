@@ -1,0 +1,21 @@
+Collapsi is a turn-based strategy game where two players compete to be the last one able to move on a progressively collapsing board.
+
+FEATURES:
+- Each board cell contains a number indicating exactly how many squares you must move
+- After each move, your previous position becomes permanently blocked
+- The goal is to leave your opponent without valid moves available
+- Movements can cross board edges (wrap-around/tunnels)
+
+GAME MODES:
+- Human vs Human: Local matches between two players
+- Human vs AI: 4 difficulty levels (Easy, Medium, Hard, Expert)
+- Tournament mode: Progression system with multiple levels
+
+SETTINGS:
+- Multiple board sizes: 4×4, 5×5, 6×6
+- Visual movement help with configurable delay
+- Sound system with sound effects and background music
+- Haptic feedback on mobile devices
+- Responsive interface optimized for mobile
+
+Fully developed in Flutter, without ads or in-app purchases.
