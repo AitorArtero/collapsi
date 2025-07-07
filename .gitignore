@@ -122,6 +122,7 @@ build/reports/
 # Project specific
 BUILD_APK.md
 push_git.txt
+TODO
 
 # Exceptions to above rules
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
